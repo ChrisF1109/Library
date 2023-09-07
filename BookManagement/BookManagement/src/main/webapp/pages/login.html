@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+
+
+    <!--引入element-ui-->
+    <!-- 引入样式 -->
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>图书管理</el-header>
+        <!--主体内容-->
+        <el-main>
+
+
+            <el-row>
+                <el-col :span="8" :offset="8">
+                    <div id="loginBox">
+                        管理员登录<br>
+                        账号：
+                        <el-input v-model="adminUser.username" placeholder="账号"></el-input>
+
+                        <br>
+                        密码：
+                        <el-input type="password" v-model="adminUser.password" placeholder="密码"></el-input>
+                        <br>
+                        <el-button type="primary" @click="reset">重置</el-button>
+                        <el-button type="primary" @click="login">管理登录</el-button>
+                        <el-button type="primary" @click="login2">用户登录</el-button>
+                    </div>
+                </el-col>
+            </el-row>
+
+
+        </el-main>
+        <el-footer>Copyright © 2022xxxx all rights reserved</el-footer>
+    </el-container>
+
+
+</div>
+
+
+</body>
+</html>
+
+<script src="../js/axios-0.18.0.js"></script>
+<!--引入js-->
+<script src="../js/vue.js"></script>
+<!--<script src="../js/vue-router.global.js"></script>-->
+<script src="../js/jquery.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+<script>
+    var app = new Vue({
+            el: "#app",
+            data: {
+                adminUser: {},
+
+            },
+            methods: {
+                reset() {//重置
+                    this.adminUser = {};
+                },
+                login() {//点击登录按钮后发送ajax请求给后端进行账号密码比对
+                    // var that = this;
+                    // that.$router.replace("/books");
+
+
+                    axios.get("/BookManagement_war/users/" + this.adminUser.username).then((res) => {
+                        // console.log(this.adminUser.username)
+                        // console.log(res.data.data.psw);
+                        if (res.data.code == 20041 && this.adminUser.password == res.data.data.psw) {
+                            console.log("登陆成功");
+                            // that.$router.push("/books");
+
+                            window.location.href = "http://localhost:8081/BookManagement_war/pages/books.html";
+                        } else {
+                            this.$message.error("账号或密码错误");
+                        }
+                    }).catch((err) => {
+
+                    });
+
+                },
+
+                login2(){
+                    axios.get("/BookManagement_war/users/getByVistorsname?vistorsname=" + this.adminUser.username).then((res) => {
+                        // console.log(this.adminUser.username)
+                        // console.log(res.data.data.psw);
+                        console.log(res.data.data.psw);
+                        if (res.data.code == 20041 && this.adminUser.password == res.data.data.psw) {
+                            console.log("登陆成功");
+                            // that.$router.push("/books");
+
+                            window.location.href = "http://localhost:8081/BookManagement_war/pages/users.html";
+                        } else {
+                            this.$message.error("账号或密码错误");
+                        }
+                    }).catch((err) => {
+
+                    });
+                }
+            }
+        });
+
+</script>

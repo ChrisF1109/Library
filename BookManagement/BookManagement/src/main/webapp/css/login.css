@@ -1,0 +1,48 @@
+/*整体样式*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html, .el-container, #app {
+    height: 100%;
+}
+
+/*放账号密码input的div*/
+#loginBox {
+    background-color: #eee;
+    border-radius: 15px;
+    margin-top: 15%;
+}
+
+/*布局容器样式 main header fotter*/
+.el-header {
+    background-color: deepskyblue;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: xx-large;
+    font-weight: bolder;
+
+}
+
+.el-footer {
+    background-color: #bbb;
+    color: #000;
+    text-align: center;
+    line-height: 60px;
+
+}
+
+.el-main {
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    line-height: 80px;
+
+}
+
+/*    输入框样式*/
+.el-input {
+    width: 50%;
+}
